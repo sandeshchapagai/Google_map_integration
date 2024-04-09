@@ -1,3 +1,4 @@
+import 'package:bloc_project/view/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'Bloc/counter_bloc.dart';
@@ -14,11 +15,12 @@ class MyApp extends StatelessWidget {
     return BlocProvider<CounterBloc>(
       create: (context) => CounterBloc(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(),
+        home: const Home(),
       ),
     );
   }

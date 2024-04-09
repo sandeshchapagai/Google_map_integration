@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -6,9 +9,24 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home>{
+  Completer<GoogleMapController> _controller = Completer();
+static final CameraPosition _kGoogle = const CameraPosition(
+    target:LatLng(28.237988,83.995590),zoom:10
+
+);
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body:GoogleMap(
+initialCameraPosition: _kGoogle,
+        // mapType: MapType.hybrid,
+        myLocationButtonEnabled: true,
+        myLocationEnabled: true,
+        onMapCreated: (GoogleMapController controller) {
+          _controller.complete(controller);
+        },
+      )
+    );
   }
 }
