@@ -37,6 +37,7 @@ dependencies:
   bloc: ^8.1.4
   flutter_bloc: ^8.0.0
   google_maps_flutter: ^2.6.0
+  flutter_geocoder: ^0.2.2-nullsafety
   cupertino_icons: ^1.0.6
 
 dev_dependencies:
