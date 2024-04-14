@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_geocoder/geocoder.dart';
+import 'package:geocoding/geocoding.dart';
+
 class ConvertingLatlang extends StatefulWidget {
   const ConvertingLatlang({super.key});
 
@@ -8,7 +9,7 @@ class ConvertingLatlang extends StatefulWidget {
 }
 
 class _ConvertingLatlangState extends State<ConvertingLatlang> {
-  String stAddress='';
+  String stAddress = '';
 
   @override
   Widget build(BuildContext context) {
@@ -23,32 +24,30 @@ class _ConvertingLatlangState extends State<ConvertingLatlang> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(stAddress),
-Padding(
-  padding: const EdgeInsets.all(8.0),
-  child: GestureDetector(
-    onTap: () async {
-      final query ="1600 Amphiteatre parkway ,Mountain View";
-      var address1 = await Geocoder.local.findAddressesFromQuery(query);
-      var second = address1.first;
-      print("${second.featureName}:${second.coordinates}");
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: () async {
+                // List<Location> location = await locationFromAddress("Gronausestraat 710, Enschede");
 
-
-      final coordinates = new Coordinates(33.6992, 72.9744);
-      var address =await Geocoder.local.findAddressesFromCoordinates(coordinates);
-      var first = address.first;
-      print(first.featureName! + first.addressLine.toString());
-
-      setState(() {
-stAddress=first.adminArea.toString();
-      });
-    },
-    child: Container(height: 60,
-    color: Colors.green,
-    child: Center(
-      child: Text('convert'),
-    ),),
-  ),
-)
+                List<Placemark> location =
+                    await placemarkFromCoordinates(52.2165157, 6.9437819);
+                setState(() {
+// stAddress=location.last.longitude.toString()+"  "+location.last.longitude.toString();
+                  stAddress = location.last.country.toString() +
+                      "  " +
+                      location.last.country.toString();
+                });
+              },
+              child: Container(
+                height: 60,
+                color: Colors.green,
+                child:Center(
+                  child: Text('convert'),
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );
