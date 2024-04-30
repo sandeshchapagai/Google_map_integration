@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const ConvertingLatlang(),
+        home: const Home(),
       ),
     );
   }

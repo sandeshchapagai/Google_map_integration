@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Home extends StatefulWidget {
@@ -21,7 +22,14 @@ class _HomeState extends State<Home> {
         position: LatLng(28.237988, 83.995590),
         infoWindow: InfoWindow(title: 'current location'))
   ];
+  Future<Position>  getUserCurrentLocation()  async{
+await Geolocator.requestPermission().then((value){
 
+}).onError((error, stackTrace){
+  print('error');
+});
+return await Geolocator.getCurrentPosition();
+  }
   static final CameraPosition _kGoogle = const CameraPosition(
     target: LatLng(28.237988, 83.995590),
     zoom: 10,
@@ -35,11 +43,31 @@ class _HomeState extends State<Home> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.location_searching),
         onPressed: () async {
-          GoogleMapController controller = await _controller.future;
-          controller.animateCamera(
-            CameraUpdate.newCameraPosition(
-                CameraPosition(target: LatLng(28.263610, 83.972390), zoom: 100)),
-          );
+
+
+          getUserCurrentLocation().then((value) async {print('my current location');
+          print(value.latitude.toString()+""+value.longitude.toString());
+          _marker.add(Marker(markerId: MarkerId('3'),
+          position: LatLng(value.latitude,value.longitude),
+            infoWindow: InfoWindow(
+              title: "my location"
+            )
+          ));
+
+
+          CameraPosition cameraPosition=CameraPosition(target: LatLng(value.latitude,value.longitude));
+          final GoogleMapController controller = await _controller.future;
+
+          controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+          setState(() {
+
+          });
+          });
+          // GoogleMapController controller = await _controller.future;
+          // controller.animateCamera(
+          //   CameraUpdate.newCameraPosition(
+          //       CameraPosition(target: LatLng(28.263610, 83.972390), zoom: 100)),
+          // );
         },
       ),
       body: GoogleMap(
