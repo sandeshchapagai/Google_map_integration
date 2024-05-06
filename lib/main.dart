@@ -1,4 +1,5 @@
 import 'package:bloc_project/convert_latlng_to_address.dart';
+import 'package:bloc_project/view/google_places_api.dart';
 import 'package:bloc_project/view/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const Home(),
+        home: const GooglePlacesApi(),
       ),
     );
   }
